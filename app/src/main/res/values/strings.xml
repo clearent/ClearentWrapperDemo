@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ClearentWrapperDemo</string>
+    <string name="reader_signal_and_battery_format">Battery %1$d%% | Signal %2$s</string>
+</resources>
