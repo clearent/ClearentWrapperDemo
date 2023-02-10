@@ -1,0 +1,118 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.example.clearentwrapperdemo'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.clearentwrapperdemo"
+        minSdk 27
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+        buildConfigField "String", "PUBLIC_KEY", "\"${properties.getProperty("PUBLIC_KEY")}\""
+        buildConfigField "String", "API_KEY", "\"${properties.getProperty("API_KEY")}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    def lifecycle_version = "2.5.1"
+    def fragment_version = "1.5.5"
+    def retrofit_version = "2.9.0"
+    def okhttp3_version = "4.10.0"
+    def gson_version = "2.9.0"
+    def room_version = "2.5.0"
+    def dagger_version = "2.44"
+    def nav_version = "2.5.3"
+    def powermock_version = "2.0.9"
+    def timber_version = "5.0.1"
+
+    implementation 'androidx.core:core:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'com.android.support:support-annotations:28.0.0'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.7.20"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // ViewModels delegate for fragments
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+
+    /* API */
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    // OkHttp3
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+
+    // Timber logger for file logging
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // IDTECH framework
+    implementation(group: 'com.idtechproducts.device', name: 'universal-sdk', version: '1.00.139_Test2')
+
+    // Legacy components
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Dagger 2 Dependency Injection
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // Unit testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.powermock:powermock-api-mockito2:$powermock_version"
+    testImplementation "org.powermock:powermock-module-junit4:$powermock_version"
+
+    //Room
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    //SQLCipher
+    implementation 'net.zetetic:android-database-sqlcipher:4.5.2'
+
+    // ClearentSDKUI dependency
+    implementation files('libs/clearent-idtech-android-debug.aar')
+}
